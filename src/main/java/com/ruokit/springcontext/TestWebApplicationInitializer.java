@@ -13,9 +13,6 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
-/*
- * Web.xml에서 했던 서블릿 등록/매핑, 리스터 등록, 필터 등록같은 작업을 진행한다.
- */
 public class TestWebApplicationInitializer implements WebApplicationInitializer {
 
 	private static final String DISPATCHER_SERVLET_NAME = "dispatcher";

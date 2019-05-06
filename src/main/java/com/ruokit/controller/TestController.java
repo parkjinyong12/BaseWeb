@@ -9,7 +9,7 @@ public class TestController {
 	
 	@RequestMapping("/test.do")
 	public String getTestPage(Model m) {
-		m.addAttribute("context", "mission complete");
+		m.addAttribute("context", "test message");
 		return "test";
 	}
 }

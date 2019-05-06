@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="UTF-8" isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +6,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	welcome~
+	<span>${context}</span>	
 </body>
 </html>
