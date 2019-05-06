@@ -15,10 +15,6 @@ eclipse {
 		defaultOutputDir = file("${buildDir}/classes")
 	}
 }
-//buildDir = "webapp/WEB-INF"
-//mainClassName = "site.ezic.server.TomcatLauncher"
-
-//group 'com.ruokit'
 
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
