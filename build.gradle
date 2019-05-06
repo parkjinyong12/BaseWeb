@@ -1,0 +1,57 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'eclipse-wtp'
+}
+
+buildDir = "target"
+war {
+    baseName = 'BaseWeb'
+    version = '1.0.0-BUILD-SNAPSHOT'   
+}
+
+eclipse {
+	classpath {
+		defaultOutputDir = file("${buildDir}/classes")
+	}
+}
+//buildDir = "webapp/WEB-INF"
+//mainClassName = "site.ezic.server.TomcatLauncher"
+
+//group 'com.ruokit'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+def version = [
+        spring: '5.1.5.RELEASE',
+        slf4j: '1.7.25',
+        tomcat: '8.0.9'
+]
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+	// servlet
+    providedCompile group: "javax.servlet", name: "javax.servlet-api", version: "3.1.0"
+    
+    // spring
+    compile  group: "org.springframework", name: "spring-webmvc", version: "${version.spring}"
+	compile  group: "org.springframework", name: "spring-context", version: "${version.spring}"
+    
+    // tomcat
+	compile group: "org.apache.tomcat", name: "tomcat", version: "${version.tomcat}"
+	
+    // logger
+    compile group: "org.slf4j", name: "slf4j-api", version: "${version.slf4j}"
+    compile group: "org.slf4j", name: "slf4j-log4j12", version: "${version.slf4j}"
+    compile group: "org.slf4j", name: "jcl-over-slf4j", version: "${version.slf4j}"
+    compile group: "log4j", name: "log4j", version: "1.2.17"
+    
+    // junit
+    testCompile group: "junit", name: "junit", version: "4.12"    
+}
+
