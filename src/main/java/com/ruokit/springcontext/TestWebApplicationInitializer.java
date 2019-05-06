@@ -16,10 +16,13 @@ import org.springframework.web.servlet.DispatcherServlet;
 public class TestWebApplicationInitializer implements WebApplicationInitializer {
 
 	private static final String DISPATCHER_SERVLET_NAME = "dispatcher";
+	//private static final Logger logger = LoggerFactory.getLogger(TestWebApplicationInitializer.class);
 	
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {		
-		//servletContext.setInitParameter("key", "value");
+		
+		//logger.debug("Spring Framework init");
+		//servletContext.setInitParameter("key", "value");		
 		registerDispatcherServlet(servletContext);		
 	}
 	
