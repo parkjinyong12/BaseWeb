@@ -11,13 +11,15 @@ import javax.servlet.ServletRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
 public class TestWebApplicationInitializer implements WebApplicationInitializer {
 
-	private static final String DISPATCHER_SERVLET_NAME = "BaseWeb";
+	private static final String DISPATCHER_SERVLET_NAME = "dispatcher";
+	private static final String SECURITY_SERVLET_NAME = "security";
 	
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {	
@@ -28,6 +30,9 @@ public class TestWebApplicationInitializer implements WebApplicationInitializer 
 	private void registerDispatcherServlet(ServletContext servletContext) {
 		
 		// 리스너 추가		
+//		AnnotationConfigWebApplicationContext listenerContext = new AnnotationConfigWebApplicationContext();
+//		listenerContext.register(TestListenerConfig.class);
+//		servletContext.addListener(new ContextLoaderListener(listenerContext));
 		
 		// 필터 추가
 		FilterRegistration.Dynamic filterRegist = servletContext.addFilter("characterEncodingFilter", new CharacterEncodingFilter());			
@@ -38,11 +43,19 @@ public class TestWebApplicationInitializer implements WebApplicationInitializer 
 		// 서블릿 추가
 		AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
 		dispatcherContext.register(TestWebConfig.class);
-			
-		ServletRegistration.Dynamic servletRegist;		
-		servletRegist = servletContext.addServlet(DISPATCHER_SERVLET_NAME, new DispatcherServlet(dispatcherContext));
-		//servletRegist.setInitParameter("key", "value");
-		servletRegist.setLoadOnStartup(1);
-		servletRegist.addMapping("/");
+					
+		ServletRegistration.Dynamic dispatcherServletRegist;		
+		dispatcherServletRegist = servletContext.addServlet(DISPATCHER_SERVLET_NAME, new DispatcherServlet(dispatcherContext));		
+		dispatcherServletRegist.setLoadOnStartup(1);
+		dispatcherServletRegist.addMapping("/");
+		
+		// 서블릿 추가
+		AnnotationConfigWebApplicationContext securityContext = new AnnotationConfigWebApplicationContext();
+		securityContext.register(TestSecurityWebConfig.class);
+					
+		ServletRegistration.Dynamic securityServletRegist;		
+		securityServletRegist = servletContext.addServlet(SECURITY_SERVLET_NAME, new DispatcherServlet(securityContext));		
+		securityServletRegist.setLoadOnStartup(1);
+		securityServletRegist.addMapping("/");
 	}
 }
