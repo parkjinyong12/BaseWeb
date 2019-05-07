@@ -17,7 +17,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 public class TestWebApplicationInitializer implements WebApplicationInitializer {
 
-	private static final String DISPATCHER_SERVLET_NAME = "dispatcher";
+	private static final String DISPATCHER_SERVLET_NAME = "BaseWeb";
 	
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {	
