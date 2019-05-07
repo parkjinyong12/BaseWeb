@@ -8,6 +8,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -16,22 +18,16 @@ import org.springframework.web.servlet.DispatcherServlet;
 public class TestWebApplicationInitializer implements WebApplicationInitializer {
 
 	private static final String DISPATCHER_SERVLET_NAME = "dispatcher";
-	//private static final Logger logger = LoggerFactory.getLogger(TestWebApplicationInitializer.class);
 	
 	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {		
-		
-		//logger.debug("Spring Framework init");
-		//servletContext.setInitParameter("key", "value");		
+	public void onStartup(ServletContext servletContext) throws ServletException {	
+		//servletContext.setInitParameter("key", "value");
 		registerDispatcherServlet(servletContext);		
 	}
 	
 	private void registerDispatcherServlet(ServletContext servletContext) {
 		
-		// 리스너 추가
-		//AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-		//rootContext.register(TestRootConfig.class);
-		//servletContext.addListener(new ContextLoaderListener(rootContext));
+		// 리스너 추가		
 		
 		// 필터 추가
 		FilterRegistration.Dynamic filterRegist = servletContext.addFilter("characterEncodingFilter", new CharacterEncodingFilter());			
