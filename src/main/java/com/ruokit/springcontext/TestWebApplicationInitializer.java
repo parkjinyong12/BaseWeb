@@ -8,12 +8,10 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
 public class TestWebApplicationInitializer implements WebApplicationInitializer {
@@ -35,11 +33,16 @@ public class TestWebApplicationInitializer implements WebApplicationInitializer 
 //		servletContext.addListener(new ContextLoaderListener(listenerContext));
 		
 		// 필터 추가
-		FilterRegistration.Dynamic filterRegist = servletContext.addFilter("characterEncodingFilter", new CharacterEncodingFilter());			
-		EnumSet<DispatcherType> dispatcherType = EnumSet.of(DispatcherType.REQUEST);
-		filterRegist.setInitParameter("encoding", "UTF-8");
-		filterRegist.addMappingForUrlPatterns(dispatcherType, true, "/*");
+		FilterRegistration.Dynamic characterEncodingFilterRegist = servletContext.addFilter("characterEncodingFilter", new CharacterEncodingFilter());			
+		EnumSet<DispatcherType> characterEncodingFilterType = EnumSet.of(DispatcherType.REQUEST);
+		characterEncodingFilterRegist.setInitParameter("encoding", "UTF-8");
+		characterEncodingFilterRegist.addMappingForUrlPatterns(characterEncodingFilterType, true, "/*");
 		
+		// 필터 추가
+		FilterRegistration.Dynamic delegatingFilterRegist = servletContext.addFilter("delegatingFilter", new DelegatingFilterProxy("delegatingFilter"));			
+		EnumSet<DispatcherType> delegatingFilterType = EnumSet.of(DispatcherType.REQUEST);
+		delegatingFilterRegist.addMappingForUrlPatterns(delegatingFilterType, true, "/*");
+				
 		// 서블릿 추가
 		AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
 		dispatcherContext.register(TestWebConfig.class);
