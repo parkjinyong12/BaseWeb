@@ -38,18 +38,16 @@ public class TestSecurityWebConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		
-		http.authorizeRequests()/*
-								 * .antMatchers("/test/**").access("ROLE_USER")
-								 * .antMatchers("/admin/**").access("ROLE_ADMIN") .antMatchers("/", "/login",
-								 * "/login-error").permitAll()
-								 */
-	            .antMatchers("/**").authenticated();
+		http.authorizeRequests().antMatchers("/test/**").access("ROLE_USER")
+								.antMatchers("/admin/**").access("ROLE_ADMIN") 
+								.antMatchers("/", "/login.do",	"/login-error").permitAll()
+					            .antMatchers("/**").authenticated();
 
         http.csrf().disable();
 
         http.formLogin()
                 .loginPage("/")
-                .loginPage("/login")
+                .loginPage("/login.do")
                 .loginProcessingUrl("/login-processing")
                 .failureUrl("/login-error")
                 .defaultSuccessUrl("/home", true)
@@ -59,10 +57,7 @@ public class TestSecurityWebConfig extends WebSecurityConfigurerAdapter {
 	    http.logout()
             .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
             .logoutSuccessUrl("/")
-            .invalidateHttpSession(true);
-
-	    //http.userDetailsService(userDetailsService);
-	    //http.authenticationProvider(authenticationProvider);
+            .invalidateHttpSession(true);	 
 	}
 	
 	@Bean

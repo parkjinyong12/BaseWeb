@@ -17,4 +17,11 @@ public class TestController {
 		m.addAttribute("context", "test message");
 		return "test";
 	}
+	
+	@RequestMapping("/login.do")
+	public String getLogin(Model m) {	
+		logger.debug("login.do enterance");
+		m.addAttribute("context", "test message");
+		return "login";
+	}
 }
