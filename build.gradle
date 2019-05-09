@@ -23,7 +23,10 @@ def version = [
         spring: '5.1.5.RELEASE',
         servlet: "3.1.0",
         slf4j: '1.7.25',
-        tomcat: '8.0.9'
+        tomcat: '8.0.9',
+        mybatis: '3.5.1',
+        mybatis_spring: '2.0.1',
+        mysql: '5.1.47'
 ]
 
 repositories {
@@ -38,9 +41,17 @@ dependencies {
     // spring
     compile  group: "org.springframework", name: "spring-webmvc", version: "${version.spring}"
 	compile  group: "org.springframework", name: "spring-context", version: "${version.spring}"
+	compile  group: "org.springframework", name: "spring-jdbc", version: "${version.spring}"
     compile  group: "org.springframework.security", name: "spring-security-web", version: "${version.spring}"
     compile  group: "org.springframework.security", name: "spring-security-config", version: "${version.spring}"
     
+    // mybatis
+    compile  group: "org.mybatis", name: "mybatis", version: "${version.mybatis}"
+    compile  group: "org.mybatis", name: "mybatis-spring", version: "${version.mybatis_spring}"
+        
+    // mysql
+    compile  group: "mysql", name: "mysql-connector-java", version: "${version.mysql}"
+
     // tomcat
 	compile group: "org.apache.tomcat", name: "tomcat", version: "${version.tomcat}"
 	

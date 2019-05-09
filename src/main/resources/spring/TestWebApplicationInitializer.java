@@ -11,6 +11,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
+import spring.config.TestDatabaseConfig;
 import spring.config.TestSecurityWebConfig;
 import spring.config.TestWebConfig;
 
@@ -41,6 +42,7 @@ public class TestWebApplicationInitializer implements WebApplicationInitializer 
         new AnnotationConfigWebApplicationContext();
     dispatcherContext.register(TestWebConfig.class);
     dispatcherContext.register(TestSecurityWebConfig.class);
+    dispatcherContext.register(TestDatabaseConfig.class);
 
     ServletRegistration.Dynamic dispatcherServletRegist;
     dispatcherServletRegist = servletContext.addServlet(DISPATCHER_SERVLET_NAME,
