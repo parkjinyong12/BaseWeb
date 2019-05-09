@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,52 +25,31 @@ public class TestSecurityWebConfig extends WebSecurityConfigurerAdapter {
   UserDetailsService userDetailsService;
 
   @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(userDetailsService);
-  }
-
-  @Override
-  public void configure(WebSecurity web) throws Exception {
-    web.ignoring().antMatchers("/res/**");
+  public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.authenticationProvider(daoAuthenticationProvider());
   }
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
 
-    http.authorizeRequests().antMatchers("/test/**").access("ROLE_USER").antMatchers("/admin/**")
-        .access("ROLE_ADMIN").antMatchers("/", "/login.do", "/login-error").permitAll()
+    http.authorizeRequests().antMatchers("/login.do", "/loginFail.do").permitAll()
         .antMatchers("/**").authenticated();
 
     http.csrf().disable();
 
-    http.formLogin().loginPage("/").loginPage("/login.do").loginProcessingUrl("/login-processing")
-        .failureUrl("/login-error").defaultSuccessUrl("/home", true).usernameParameter("id")
-        .passwordParameter("password");
+    http.formLogin().loginPage("/login.do").loginProcessingUrl("/j_spring_security_check.do")
+        .defaultSuccessUrl("/loginSuccess.do").failureUrl("/loginFail.do")
+        .usernameParameter("j_username").passwordParameter("j_password");
 
     http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
         .invalidateHttpSession(true);
-
-    logger.debug("checking");
-    http.authenticationProvider(daoAuthenticationProvider());
   }
 
   @Bean
   public DaoAuthenticationProvider daoAuthenticationProvider() {
-
-    logger.debug("authentication enterance");
     DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-    daoAuthenticationProvider.setUserDetailsService(userDetailsService);
-    // daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+    daoAuthenticationProvider.setUserDetailsService(userDetailsService); //
+    // daoAuthenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
     return daoAuthenticationProvider;
   }
-
-  /*
-   * @Bean public UserDetailsService userDetailsService() { //return
-   * userDetailsService.loadUserByUsername(null);
-   * 
-   * InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-   * manager.createUser(User.withDefaultPasswordEncoder().username("user").
-   * password("password").roles("USER").build()); return manager; }
-   */
-
 }

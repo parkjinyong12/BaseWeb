@@ -13,14 +13,14 @@ public class TestController {
 
   @RequestMapping("/test.do")
   public String getTestPage(Model m) {
-    logger.debug("test.do enterance");
+    logger.info("loc. Test Screen");
     m.addAttribute("context", "test message");
     return "test";
   }
 
   @RequestMapping("/login.do")
   public String getLogin(Model m) {
-    logger.debug("login.do enterance");
+    logger.info("loc. Login Screen");
     m.addAttribute("context", "test message");
     return "login";
   }
