@@ -17,64 +17,61 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan(basePackages="com.ruokit")
+@ComponentScan(basePackages = "com.ruokit")
 public class TestSecurityWebConfig extends WebSecurityConfigurerAdapter {
-	
-	private static final Logger logger = LoggerFactory.getLogger(TestSecurityWebConfig.class);
-	
-	@Autowired
-	UserDetailsService userDetailsService;
-	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService);
-	}
-	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-	    web.ignoring().antMatchers("/res/**");
-	}
-	
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		
-		http.authorizeRequests().antMatchers("/test/**").access("ROLE_USER")
-								.antMatchers("/admin/**").access("ROLE_ADMIN") 
-								.antMatchers("/", "/login.do",	"/login-error").permitAll()
-					            .antMatchers("/**").authenticated();
 
-        http.csrf().disable();
+  private static final Logger logger = LoggerFactory.getLogger(TestSecurityWebConfig.class);
 
-        http.formLogin()
-                .loginPage("/")
-                .loginPage("/login.do")
-                .loginProcessingUrl("/login-processing")
-                .failureUrl("/login-error")
-                .defaultSuccessUrl("/home", true)
-                .usernameParameter("id")
-                .passwordParameter("password");
+  @Autowired
+  UserDetailsService userDetailsService;
 
-	    http.logout()
-            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-            .logoutSuccessUrl("/")
-            .invalidateHttpSession(true);	 
-	}
-	
-	@Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider() throws Exception {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(userDetailsServiceBean());
-        //daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        return daoAuthenticationProvider;
-    }
-	
-	/*
-	 * @Bean public UserDetailsService userDetailsService() { //return
-	 * userDetailsService.loadUserByUsername(null);
-	 * 
-	 * InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-	 * manager.createUser(User.withDefaultPasswordEncoder().username("user").
-	 * password("password").roles("USER").build()); return manager; }
-	 */
-	
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userDetailsService);
+  }
+
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    web.ignoring().antMatchers("/res/**");
+  }
+
+  @Override
+  public void configure(HttpSecurity http) throws Exception {
+
+    http.authorizeRequests().antMatchers("/test/**").access("ROLE_USER").antMatchers("/admin/**")
+        .access("ROLE_ADMIN").antMatchers("/", "/login.do", "/login-error").permitAll()
+        .antMatchers("/**").authenticated();
+
+    http.csrf().disable();
+
+    http.formLogin().loginPage("/").loginPage("/login.do").loginProcessingUrl("/login-processing")
+        .failureUrl("/login-error").defaultSuccessUrl("/home", true).usernameParameter("id")
+        .passwordParameter("password");
+
+    http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
+        .invalidateHttpSession(true);
+
+    logger.debug("checking");
+    http.authenticationProvider(daoAuthenticationProvider());
+  }
+
+  @Bean
+  public DaoAuthenticationProvider daoAuthenticationProvider() {
+
+    logger.debug("authentication enterance");
+    DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+    daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+    // daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+    return daoAuthenticationProvider;
+  }
+
+  /*
+   * @Bean public UserDetailsService userDetailsService() { //return
+   * userDetailsService.loadUserByUsername(null);
+   * 
+   * InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+   * manager.createUser(User.withDefaultPasswordEncoder().username("user").
+   * password("password").roles("USER").build()); return manager; }
+   */
+
 }
