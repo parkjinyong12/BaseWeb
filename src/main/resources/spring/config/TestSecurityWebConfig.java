@@ -1,7 +1,5 @@
-package com.ruokit.springcontext;
+package spring.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,8 +16,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @ComponentScan(basePackages = "com.ruokit")
 public class TestSecurityWebConfig extends WebSecurityConfigurerAdapter {
-
-  private static final Logger logger = LoggerFactory.getLogger(TestSecurityWebConfig.class);
 
   @Autowired
   UserDetailsService userDetailsService;

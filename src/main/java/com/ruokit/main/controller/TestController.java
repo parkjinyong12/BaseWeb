@@ -1,4 +1,4 @@
-package com.ruokit.controller;
+package com.ruokit.main.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,15 +13,8 @@ public class TestController {
 
   @RequestMapping("/test.do")
   public String getTestPage(Model m) {
-    logger.info("loc. Test Screen");
+    logger.info("scr. test");
     m.addAttribute("context", "test message");
     return "test";
-  }
-
-  @RequestMapping("/login.do")
-  public String getLogin(Model m) {
-    logger.info("loc. Login Screen");
-    m.addAttribute("context", "test message");
-    return "login";
   }
 }

@@ -1,4 +1,4 @@
-package com.ruokit.springcontext;
+package com.ruokit.main.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.ruokit.main.domain.User;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -17,17 +17,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-    logger.debug("UserDetailsService loadUserByUsername");
-    /*
-     * Here we are using dummy data, you need to load user data from database or other third party
-     * application
-     */
+    logger.info("srv. user check");
+
     User user = findUserbyUername(username);
 
     UserBuilder builder = null;
     if (user != null) {
       builder = org.springframework.security.core.userdetails.User.withUsername(username);
-      builder.password(new BCryptPasswordEncoder().encode(user.getPassword()));
+      builder.password(user.getPassword());
       builder.roles(user.getRoles());
     } else {
       throw new UsernameNotFoundException("User not found.");

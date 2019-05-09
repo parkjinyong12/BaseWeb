@@ -1,4 +1,4 @@
-package com.ruokit.springcontext;
+package spring;
 
 import java.util.EnumSet;
 import javax.servlet.DispatcherType;
@@ -11,6 +11,8 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
+import spring.config.TestSecurityWebConfig;
+import spring.config.TestWebConfig;
 
 public class TestWebApplicationInitializer implements WebApplicationInitializer {
 
