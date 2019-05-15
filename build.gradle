@@ -26,7 +26,8 @@ def version = [
         tomcat: '8.0.9',
         mybatis: '3.5.1',
         mybatis_spring: '2.0.1',
-        mysql: '5.1.47'
+        mysql: '5.1.47',
+        javamail: '1.6.2'
 ]
 
 repositories {
@@ -63,5 +64,10 @@ dependencies {
     
     // junit
     testCompile group: "junit", name: "junit", version: "4.12"    
+    
+    // javamail
+    compile group: "javax.mail", name: "javax.mail-api", version: "${version.javamail}"
+    compile group: "com.sun.mail", name: "javax.mail", version: "${version.javamail}"
+    
 }
 
