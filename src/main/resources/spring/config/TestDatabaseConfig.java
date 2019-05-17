@@ -1,5 +1,6 @@
 package spring.config;
 
+import javax.sql.DataSource;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -12,7 +13,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.jndi.JndiObjectFactoryBean;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 
 @PropertySource("classpath:mybatis/db.properties")
 @Configuration
@@ -27,24 +29,26 @@ public class TestDatabaseConfig {
   private static final Logger logger = LoggerFactory.getLogger(TestDatabaseConfig.class);
 
   @Bean
-  public JndiObjectFactoryBean dataSource() {
-    // DriverManagerDataSource source = new DriverManagerDataSource();
-    // source.setDriverClassName(environment.getProperty("dbDriverClass"));
-    // source.setUrl(environment.getProperty("dbUrl"));
-    // source.setUsername(environment.getProperty("dbUser"));
-    // source.setPassword(environment.getProperty("dbPassword"));
+  public DataSource jndiDataSource() {
+    JndiDataSourceLookup jndiDataSourceLookup = new JndiDataSourceLookup();
+    jndiDataSourceLookup.setResourceRef(true);
+    return jndiDataSourceLookup.getDataSource("jdbc/test");
+  }
 
-    JndiObjectFactoryBean source = new JndiObjectFactoryBean();
-    source.setJndiName("jdbc/test");
-    source.setResourceRef(true);
-
+  @Bean
+  public DataSource dataSource() {
+    DriverManagerDataSource source = new DriverManagerDataSource();
+    source.setDriverClassName(environment.getProperty("dbDriverClass"));
+    source.setUrl(environment.getProperty("dbUrl"));
+    source.setUsername(environment.getProperty("dbUser"));
+    source.setPassword(environment.getProperty("dbPassword"));
     return source;
   }
 
   @Bean
   public SqlSessionFactory sqlSessionFactory() throws Exception {
     SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-    // sqlSessionFactoryBean.setDataSource(dataSource());
+    sqlSessionFactoryBean.setDataSource(jndiDataSource());
     sqlSessionFactoryBean.setConfigLocation(
         applicationContext.getResource(environment.getProperty("mybatisConfig")));
     sqlSessionFactoryBean.setMapperLocations(
