@@ -1,14 +1,17 @@
 package com.ruokit.main.dao.impl;
 
-import org.springframework.stereotype.Component;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import com.ruokit.main.dao.TestDao;
 
-@Component
-public class TestDaoImpl {
+@Repository
+public class TestDaoImpl implements TestDao {
 
-  // @Autowired
-  // private SqlSession sqlSession;
+  @Autowired
+  private SqlSession sqlSession;
 
-  public void test() {
-    // sqlSession.select
+  public String getTest() {
+    return sqlSession.selectOne("Test.getTest");
   }
 }

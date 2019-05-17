@@ -1,5 +1,5 @@
 package com.ruokit.main.dao;
 
-public class TestDao {
-
+public interface TestDao {
+  public String getTest();
 }

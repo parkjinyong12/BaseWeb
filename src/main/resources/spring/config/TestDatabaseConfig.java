@@ -1,14 +1,12 @@
 package spring.config;
 
 import javax.sql.DataSource;
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -22,9 +20,6 @@ public class TestDatabaseConfig {
 
   @Autowired
   private Environment environment;
-
-  @Autowired
-  private ApplicationContext applicationContext;
 
   private static final Logger logger = LoggerFactory.getLogger(TestDatabaseConfig.class);
 
@@ -49,19 +44,19 @@ public class TestDatabaseConfig {
   public SqlSessionFactory sqlSessionFactory() throws Exception {
     SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
     sqlSessionFactoryBean.setDataSource(jndiDataSource());
-    sqlSessionFactoryBean.setConfigLocation(
-        applicationContext.getResource(environment.getProperty("mybatisConfig")));
-    sqlSessionFactoryBean.setMapperLocations(
-        applicationContext.getResources(environment.getProperty("mybatisMapperXML")));
+    // sqlSessionFactoryBean.setConfigLocation(
+    // applicationContext.getResource(environment.getProperty("mybatisConfig")));
+    // sqlSessionFactoryBean.setMapperLocations(
+    // applicationContext.getResources(environment.getProperty("mybatisMapperXML")));
 
-    logger.debug(environment.getProperty("mybatisConfig"));
-    logger.debug(environment.getProperty("mybatisMapperXML"));
+    // logger.debug(environment.getProperty("mybatisConfig"));
+    // logger.debug(environment.getProperty("mybatisMapperXML"));
     return sqlSessionFactoryBean.getObject();
   }
 
 
   @Bean
-  public SqlSession sqlSession() throws Exception {
+  public SqlSessionTemplate sqlSession() throws Exception {
     SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory());
     return sqlSessionTemplate;
   }

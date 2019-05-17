@@ -28,7 +28,7 @@ public class TestSecurityWebConfig extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(HttpSecurity http) throws Exception {
 
-    http.authorizeRequests().antMatchers("/login.do", "/loginFail.do", "/mail/**")
+    http.authorizeRequests().antMatchers("/login.do", "/loginFail.do", "/mail/**", "/test/**")
         .permitAll().antMatchers("/**").authenticated();
 
     http.csrf().disable();
