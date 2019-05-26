@@ -10,13 +10,15 @@ import com.ruokit.main.service.mail.MailService;
 @Service
 public class TestService {
 
-  private static final Logger logger = LoggerFactory.getLogger(MailService.class);
+  private static final Logger logger = LoggerFactory.getLogger(TestService.class);
 
   @Autowired
   private TestDao testDao;
 
-  public void getTest() {
+  public String getTest() {
+	logger.info("srv. getTest");
     String now = testDao.getTest();
     logger.debug(now);
+    return now;
   }
 }

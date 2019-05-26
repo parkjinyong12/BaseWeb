@@ -1,4 +1,4 @@
-package spring.login;
+package com.ruokit.main.service.login.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

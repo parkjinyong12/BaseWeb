@@ -15,6 +15,11 @@
 		<appender-ref ref="console"/>
 	</logger>
 	
+	<logger name="com.ruokit.service.test" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="console"/>
+	</logger>
+	
 	<logger name="com.ruokit.springcontext" additivity="false">
 		<level value="DEBUG" />
 		<appender-ref ref="console"/>

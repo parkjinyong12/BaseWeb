@@ -25,7 +25,9 @@ public class TestController {
   }
 
   @RequestMapping("/getTest.do")
-  public void getTest() {
-    testService.getTest();
+  public String getTest(Model m) {
+    String result = testService.getTest();
+    m.addAttribute("context", result);
+    return "test";
   }
 }
