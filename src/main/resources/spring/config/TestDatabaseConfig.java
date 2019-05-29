@@ -1,6 +1,9 @@
 package spring.config;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
+
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -11,18 +14,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 
 @PropertySource("classpath:mybatis/db.properties")
 @Configuration
 public class TestDatabaseConfig {
 
-  @Autowired
-  private Environment environment;
-
   private static final Logger logger = LoggerFactory.getLogger(TestDatabaseConfig.class);
-
+  
   @Bean
   public DataSource jndiDataSource() {
     JndiDataSourceLookup jndiDataSourceLookup = new JndiDataSourceLookup();
@@ -40,13 +39,18 @@ public class TestDatabaseConfig {
 //    return source;
 //  }
 
-  @Bean
+  
+  @Bean 
   public SqlSessionFactory sqlSessionFactory(ApplicationContext applicationContext) throws Exception {
-    SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+	  		    	  
+	Properties properties = (Properties) applicationContext.getBean("getConfiguration");
+	
+	SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
     sqlSessionFactoryBean.setDataSource(jndiDataSource());
-    sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource(environment.getProperty("mybatisConfig")));
-    sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources(environment.getProperty("mybatisMapperXML")));
-    
+
+    sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource(properties.getProperty("mybatisConfig")));
+	sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources(properties.getProperty("mybatisMapperXML")));
+		
     return sqlSessionFactoryBean.getObject();
   }
 
