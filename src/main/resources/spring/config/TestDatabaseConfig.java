@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 
 @PropertySource("classpath:mybatis/db.properties")
@@ -31,25 +30,22 @@ public class TestDatabaseConfig {
     return jndiDataSourceLookup.getDataSource("jdbc/test");
   }
 
-  @Bean
-  public DataSource dataSource() {
-    DriverManagerDataSource source = new DriverManagerDataSource();
-    source.setDriverClassName(environment.getProperty("dbDriverClass"));
-    source.setUrl(environment.getProperty("dbUrl"));
-    source.setUsername(environment.getProperty("dbUser"));
-    source.setPassword(environment.getProperty("dbPassword"));
-    return source;
-  }
+//  @Bean
+//  public DataSource dataSource() {
+//    DriverManagerDataSource source = new DriverManagerDataSource();
+//    source.setDriverClassName(environment.getProperty("dbDriverClass"));
+//    source.setUrl(environment.getProperty("dbUrl"));
+//    source.setUsername(environment.getProperty("dbUser"));
+//    source.setPassword(environment.getProperty("dbPassword"));
+//    return source;
+//  }
 
   @Bean
   public SqlSessionFactory sqlSessionFactory(ApplicationContext applicationContext) throws Exception {
     SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
     sqlSessionFactoryBean.setDataSource(jndiDataSource());
     sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource(environment.getProperty("mybatisConfig")));
-//    sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources(environment.getProperty("mybatisMapperXML")));
-
-    logger.debug(environment.getProperty("mybatisConfig"));
-    logger.debug(environment.getProperty("mybatisMapperXML"));
+    sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources(environment.getProperty("mybatisMapperXML")));
     
     return sqlSessionFactoryBean.getObject();
   }
