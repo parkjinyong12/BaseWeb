@@ -43,7 +43,7 @@ public class TestDatabaseConfig {
   @Bean 
   public SqlSessionFactory sqlSessionFactory(ApplicationContext applicationContext) throws Exception {
 	  		    	  
-	Properties properties = (Properties) applicationContext.getBean("getConfiguration");
+	Properties properties = (Properties) applicationContext.getBean("appConfiguration");
 	
 	SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
     sqlSessionFactoryBean.setDataSource(jndiDataSource());

@@ -16,27 +16,23 @@ import com.ruokit.main.domain.MailContent;
 public class MailService {
 
   private static final Logger logger = LoggerFactory.getLogger(MailService.class);
-
-  private String FROM = "bright@kti.co.kr";
-  private String FROMNAME = "¹ÚÁø¿ë";
-
-  // private String TO = "methere12@naver.com";
-
-  private String SMTP_USERNAME = "bh9578";
-  private String SMTP_PASSWORD = "#wngus1245";
-
-  private String configSet = "ConfigSet";
-  private String HOST = "smtp.gmail.com";
-
-  private int PORT = 587;
-
-  // private String subject = "Amazon SES test (SMTP interface accessed using Java)";
-
-  private String body = String.join(System.getProperty("line.separator"),
-      "<h1>Amazon SES SMTP Email Test</h1>", "<p>This email was sent with Amazon SES using the ",
-      "<a href='https://github.com/javaee/javamail'>Javamail Package</a>",
-      " for <a href='https://www.java.com'>Java</a>.");
-
+  
+  private String smtpHost;
+  private String smtpPort;
+  private String smtpUserName;
+  private String smtpPassword;  
+  private String sender;
+  private String senderName;
+  
+  public MailService(String smtpHost, String smtpPort, String smtpUserName, String smtpPassword, String sender, String senderName) {          
+      this.smtpHost = smtpHost;
+      this.smtpPort = smtpPort;
+      this.smtpUserName = smtpUserName;
+      this.smtpPassword = smtpPassword;      
+      this.sender = sender;
+      this.senderName = senderName;
+  }
+    
   public String sendMail(MailContent content) {
 
     ResultCode code;
@@ -45,11 +41,10 @@ public class MailService {
       code = ResultCode.FAIL;
       return code.getText();
     }
-
-
+    
     Properties props = System.getProperties();
     props.put("mail.transport.protocol", "smtp");
-    props.put("mail.smtp.port", PORT);
+    props.put("mail.smtp.port", smtpPort);
     props.put("mail.smtp.starttls.enable", "true");
     props.put("mail.smtp.auth", "true");
 
@@ -57,11 +52,11 @@ public class MailService {
     MimeMessage msg = new MimeMessage(session);
 
     try {
-      msg.setFrom(new InternetAddress(FROM, FROMNAME));
+      msg.setFrom(new InternetAddress(sender, senderName));
       msg.setRecipient(Message.RecipientType.TO, new InternetAddress(content.getReceiver()));
       msg.setSubject(content.getSubject());
       msg.setContent(content.getContent(), "text/html; charset=utf-8");
-      msg.setHeader("X-SES-CONFIGURATION-SET", configSet);
+      msg.setHeader("X-SES-CONFIGURATION-SET", "ConfigSet");
     } catch (UnsupportedEncodingException e) {
       logger.debug("Mail InternetAddress Setting Exception..");
     } catch (MessagingException e) {
@@ -71,11 +66,12 @@ public class MailService {
     Transport transport = null;
     try {
       transport = session.getTransport();
-      transport.connect(HOST, SMTP_USERNAME, SMTP_PASSWORD);
+      transport.connect(smtpHost, smtpUserName, smtpPassword);
       transport.sendMessage(msg, msg.getAllRecipients());
       code = ResultCode.SUCCESS;
 
     } catch (MessagingException e1) {
+      e1.printStackTrace();
       logger.debug("Mail Sending Exception..");
       code = ResultCode.FAIL;
     } finally {
