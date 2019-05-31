@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruokit.main.dao.TestDao;
-import com.ruokit.main.service.mail.MailService;
 
 @Service
 public class TestService {
@@ -16,9 +15,9 @@ public class TestService {
   private TestDao testDao;
 
   public String getTest() {
-	logger.info("srv. getTest");
+    logger.info("srv. getTest");
     String now = testDao.getTest();
-    logger.debug(now);
+    logger.info(now);
     return now;
   }
 }
