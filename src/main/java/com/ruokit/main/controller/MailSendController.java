@@ -37,7 +37,9 @@ public class MailSendController {
     content.setReceiver("methere12@naver.com");   
     ResultCode result = mailService.sendMail(content);
     
+    m.addAttribute("result", result.getText());    
     logger.info("mail send result : " + result.getText());
+    
     return viewDirectory + "/sendResult";
   }
 
