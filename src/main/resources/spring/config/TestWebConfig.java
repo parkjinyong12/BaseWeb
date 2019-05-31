@@ -17,9 +17,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @ComponentScan(basePackages = "com.ruokit.controller")
 public class TestWebConfig {
 
-  private static final Logger logger = LoggerFactory.getLogger(TestWebConfig.class);
-  private static final String commonPropPath = "/common.properties";
-  private static final String dbPropPath = "/mybatis/db.properties";
+  private static final Logger logger = LoggerFactory.getLogger(TestWebConfig.class);  
+  private static final String appPropPath = "/config/application.properties";
+   
+  private String[] environmentTypes = {"dev","prod"};
   
   @Bean
   public InternalResourceViewResolver viewResolver() {
@@ -30,34 +31,69 @@ public class TestWebConfig {
   }
   
   @Bean(name="appConfiguration")
-  public Properties appConfiguration() {
+  public Properties appConfiguration() throws Exception {
 		
-	Properties properties = new Properties();
-	InputStream commProperties = getClass().getResourceAsStream(commonPropPath);
-	InputStream dbProperties = getClass().getResourceAsStream(dbPropPath);
+    String commonPropPath = "";
+    String dbPropPath = "";
+	Properties properties = new Properties();	
 	
-	try {
-		properties.load(new BufferedInputStream(commProperties));
-		logger.info("commonProperties version : " + properties.getProperty("version") + ", classpath:" + commonPropPath);
-		properties.load(new BufferedInputStream(dbProperties));
-		logger.info("dbProperties version : " + properties.getProperty("version") + ", classpath:" + dbPropPath);
+	InputStream applicationProperties = null;
+	InputStream commProperties = null;
+	InputStream dbProperties = null;
+	
+	try {	  
+	  
+	  applicationProperties = getClass().getResourceAsStream(appPropPath);
+	  properties.load(new BufferedInputStream(applicationProperties));
+	  
+	  // 개발환경 체크
+	  String environment = properties.getProperty("environment");
+	  boolean environmentCheck = false;
+	  if(environment == null) {
+	    logger.error("Exception : environment setting is null");
+	    throw new Exception();
+	  } else {
+	    for (String type : environmentTypes) {
+	      if(type.equals(environment)) {
+	        logger.info("environment : " + environment);
+	        environmentCheck = true;
+	      }
+        }
+	    if(!environmentCheck) {
+	      logger.error("environment : " + environment);
+	      logger.error("Exception : environment type is unknown");
+	      throw new Exception();
+	    }
+	  }
+	  commonPropPath = "/config/" + environment + "/common.properties";
+	  dbPropPath = "/config/" + environment + "/db.properties";
+	  	  
+	  commProperties = getClass().getResourceAsStream(commonPropPath);
+	  dbProperties = getClass().getResourceAsStream(dbPropPath);
+	  
+	  properties.load(new BufferedInputStream(commProperties));
+	  logger.info("commonProperties version : " + properties.getProperty("version") + ", classpath:" + commonPropPath);
+	  properties.load(new BufferedInputStream(dbProperties));
+	  logger.info("dbProperties version : " + properties.getProperty("version") + ", classpath:" + dbPropPath);
+	  
 	} catch (IOException e1) {
-		logger.error("exception : properties file loading");
+	  logger.error("Exception : properties file loading");
+	  
 	} finally {
-		if(commProperties != null) {
-			try {
-				commProperties.close();
-			} catch (IOException e) {
-				logger.error("exception : commProperties inputStream close");
-			}
+	  if(commProperties != null) {
+		try {
+		  commProperties.close();
+		} catch (IOException e) {
+		  logger.error("Exception : commProperties inputStream close");
 		}
-		if(dbProperties != null) {
-			try {
-				dbProperties.close();
-			} catch (IOException e) {
-				logger.error("exception : dbProperties inputStream close");
-			}
+	  }
+	  if(dbProperties != null) {
+		try {
+		  dbProperties.close();
+		} catch (IOException e) {
+		  logger.error("Exception : dbProperties inputStream close");
 		}
+	  }
 	}	
 	return properties;
   }
