@@ -33,13 +33,13 @@ public class MailService {
       this.senderName = senderName;
   }
     
-  public String sendMail(MailContent content) {
+  public ResultCode sendMail(MailContent content) {
 
     ResultCode code;
     if (content == null) {
       logger.debug("Mail Content is Null..");
       code = ResultCode.FAIL;
-      return code.getText();
+      return code;
     }
     
     Properties props = System.getProperties();
@@ -84,6 +84,6 @@ public class MailService {
       }
     }
 
-    return code.getText();
+    return code;
   }
 }

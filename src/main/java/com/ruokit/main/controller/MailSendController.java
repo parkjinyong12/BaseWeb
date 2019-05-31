@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.ruokit.main.ResultCode;
 import com.ruokit.main.domain.MailContent;
 import com.ruokit.main.service.mail.MailService;
 
@@ -34,10 +35,9 @@ public class MailSendController {
     MailService mailService = new MailService(smtpHost, smtpPort, smtpUserName, smtpPassword, sender, senderName);
       
     content.setReceiver("methere12@naver.com");   
-    String result = mailService.sendMail(content);
-      
-    m.addAttribute("result", result);
-      
+    ResultCode result = mailService.sendMail(content);
+    
+    logger.info("mail send result : " + result.getText());
     return viewDirectory + "/sendResult";
   }
 
