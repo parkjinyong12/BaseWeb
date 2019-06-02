@@ -12,6 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
+import org.springframework.transaction.jta.JtaTransactionManager;
 
 @Configuration
 public class TestDatabaseConfig {
@@ -45,5 +46,11 @@ public class TestDatabaseConfig {
   public SqlSessionTemplate sqlSession(ApplicationContext applicationContext) throws Exception {
     SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory(applicationContext));
     return sqlSessionTemplate;
+  }
+  
+  @Bean
+  public JtaTransactionManager transactionManager() {
+    JtaTransactionManager transactionManager = new JtaTransactionManager();
+    return transactionManager;
   }
 }
