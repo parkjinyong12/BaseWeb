@@ -1,4 +1,4 @@
-package com.ruokit.main.mail.service;
+package com.ruokit.main.service.mail;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
@@ -11,7 +11,7 @@ import javax.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.ruokit.main.ResultCode;
-import com.ruokit.main.mail.model.MailContent;
+import com.ruokit.main.model.mail.MailContent;
 
 public class MailService {
 

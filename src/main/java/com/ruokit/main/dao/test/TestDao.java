@@ -1,4 +1,4 @@
-package com.ruokit.main.test.dao;
+package com.ruokit.main.dao.test;
 
 public interface TestDao {
   public String getTest();

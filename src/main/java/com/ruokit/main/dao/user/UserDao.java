@@ -1,4 +1,4 @@
-package com.ruokit.main.user.dao;
+package com.ruokit.main.dao.user;
 
 public interface UserDao {
   public String getUser();

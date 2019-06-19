@@ -1,4 +1,4 @@
-package com.ruokit.main.user.model;
+package com.ruokit.main.model.user;
 
 public class User {
   private String username;

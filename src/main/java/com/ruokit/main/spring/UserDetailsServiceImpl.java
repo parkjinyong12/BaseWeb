@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import com.ruokit.main.user.model.User;
+import com.ruokit.main.model.user.User;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

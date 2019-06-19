@@ -1,10 +1,10 @@
-package com.ruokit.main.test.service;
+package com.ruokit.main.service.test;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruokit.main.test.dao.TestDao;
+import com.ruokit.main.dao.test.TestDao;
 
 @Service
 public class TestService {

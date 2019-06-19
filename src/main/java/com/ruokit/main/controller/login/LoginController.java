@@ -1,9 +1,10 @@
-package com.ruokit.main.controller;
+package com.ruokit.main.controller.login;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.ruokit.main.controller.test.TestController;
 
 @Controller
 public class LoginController {
