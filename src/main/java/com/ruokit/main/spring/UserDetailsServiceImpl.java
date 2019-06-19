@@ -1,4 +1,4 @@
-package com.ruokit.main.service.login.impl;
+package com.ruokit.main.spring;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import com.ruokit.main.domain.User;
+import com.ruokit.main.user.model.User;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -34,6 +34,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   }
 
   private User findUserbyUername(String username) {
+
+
     if (username.equalsIgnoreCase("admin")) {
       return new User(username, "admin123", "ADMIN");
     }

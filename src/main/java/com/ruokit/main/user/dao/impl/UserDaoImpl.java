@@ -1,18 +1,17 @@
-package com.ruokit.main.dao.impl;
+package com.ruokit.main.user.dao.impl;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import com.ruokit.main.dao.TestDao;
+import com.ruokit.main.user.dao.UserDao;
 
 @Repository
-public class TestDaoImpl implements TestDao {
+public class UserDaoImpl implements UserDao {
 
   @Autowired
   private SqlSessionTemplate sqlSession;
 
-  public String getTest() {
+  public String getUser() {
     return sqlSession.selectOne("Test.getTest");
   }
 }

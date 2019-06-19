@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.ruokit.main.ResultCode;
-import com.ruokit.main.domain.MailContent;
-import com.ruokit.main.service.mail.MailService;
+import com.ruokit.main.mail.model.MailContent;
+import com.ruokit.main.mail.service.MailService;
 
 @Controller
 @RequestMapping("/mail")

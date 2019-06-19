@@ -1,4 +1,4 @@
-package com.ruokit.main.domain;
+package com.ruokit.main.mail.model;
 
 public class MailContent {
 
