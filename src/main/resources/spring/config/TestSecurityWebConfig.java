@@ -14,11 +14,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan(basePackages = "com.ruokit")
+@ComponentScan(basePackages = "com.ruokit, spring.impl")
 public class TestSecurityWebConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
-  UserDetailsService userDetailsService;
+  private UserDetailsService userDetailsService;
 
   @Override
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
