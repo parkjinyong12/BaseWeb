@@ -1,7 +1,7 @@
 package com.ruokit.main.dao.user;
 
-import java.util.HashMap;
+import com.ruokit.main.model.user.User;
 
 public interface UserDao {
-  public HashMap<String, Object> getUser(String userId);
+  public User getUser(String userId);
 }

@@ -23,6 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
     logger.info("srv. user check");
+    // logger.info(username);
 
     User user = findUserbyUername(username);
 
@@ -40,10 +41,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   private User findUserbyUername(String username) {
 
-    logger.info((String) userDao.getUser("admin").get("reg_dt"));
-    if (username.equalsIgnoreCase("admin")) {
-      return new User(username, "admin123", "ADMIN");
-    }
+    User user = userDao.getUser(username);
+    logger.info(user.getUsername());
     return null;
   }
 }

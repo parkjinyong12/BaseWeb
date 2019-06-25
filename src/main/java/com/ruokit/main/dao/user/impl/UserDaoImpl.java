@@ -1,18 +1,14 @@
 package com.ruokit.main.dao.user.impl;
 
-import java.util.HashMap;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import com.ruokit.main.dao.CommonDao;
 import com.ruokit.main.dao.user.UserDao;
+import com.ruokit.main.model.user.User;
 
 @Repository
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl extends CommonDao implements UserDao {
 
-  @Autowired
-  private SqlSessionTemplate sqlSession;
-
-  public HashMap<String, Object> getUser(String userId) {
-    return sqlSession.selectOne("User.getUser", userId);
+  public User getUser(String userId) {
+    return getSqlSessionTemplate().selectOne("User.getUser", userId);
   }
 }

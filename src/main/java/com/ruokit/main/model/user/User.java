@@ -1,19 +1,33 @@
 package com.ruokit.main.model.user;
 
-public class User {
-  private String username;
-  private String password;
-  private String[] roles;
+import java.util.Collection;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-  public User(String username, String password, String... roles) {
-    this.username = username;
+public class User implements UserDetails {
+
+  private String userId;
+  private String password;
+
+  private boolean isAccountNonExpired;
+  private String[] roles;
+  private boolean isAccountNonLocked;
+  private boolean isCredentialsNonExpired;
+  private boolean isEnabled;
+
+  public User(String username, String password, boolean isAccountNonExpired,
+      boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
+    this.userId = username;
     this.password = password;
-    this.roles = roles;
+    this.isAccountNonExpired = isAccountNonExpired;
+    this.isAccountNonLocked = isAccountNonLocked;
+    this.isCredentialsNonExpired = isCredentialsNonExpired;
+    this.isEnabled = isEnabled;
   }
 
   // Getter and Setter methods
   public String getUsername() {
-    return username;
+    return userId;
   }
 
   public String getPassword() {
@@ -22,5 +36,31 @@ public class User {
 
   public String[] getRoles() {
     return roles;
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return this.isAccountNonExpired;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return this.isAccountNonLocked;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return this.isCredentialsNonExpired;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return this.isEnabled;
   }
 }
