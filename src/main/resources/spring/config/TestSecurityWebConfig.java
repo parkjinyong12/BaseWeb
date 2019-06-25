@@ -12,6 +12,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+/**
+ * Spring Security 인증(Authentication) 처리를 진행합니다.
+ * 
+ * @author jinyong.park
+ */
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackages = "com.ruokit, spring.impl")
@@ -20,11 +25,17 @@ public class TestSecurityWebConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private UserDetailsService userDetailsService;
 
+  /**
+   * 로그인 인증
+   */
   @Override
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.authenticationProvider(daoAuthenticationProvider());
   }
 
+  /*
+   * URL을 통한 접근 인증
+   */
   @Override
   public void configure(HttpSecurity http) throws Exception {
 
@@ -41,6 +52,9 @@ public class TestSecurityWebConfig extends WebSecurityConfigurerAdapter {
         .invalidateHttpSession(true);
   }
 
+  /*
+   * 로그인 인증 설정
+   */
   @Bean
   public DaoAuthenticationProvider daoAuthenticationProvider() {
     DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
