@@ -33,6 +33,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     UserInfo user = findUserbyUername(username);
 
+    boolean accountLocked = false;
+    boolean accountExpired = false;
+    boolean disabled = false;
+
     UserBuilder builder = null;
     if (user != null) {
       builder = org.springframework.security.core.userdetails.User.withUsername(username);
@@ -42,11 +46,26 @@ public class UserDetailsServiceImpl implements UserDetailsService {
       BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
       builder.password(encoder.encode(user.getPasswd()));
-      builder.accountLocked(false);
-      builder.accountExpired(false);
+
+      String userId = user.getUserId();
+
+      if ("Y".equals(user.getAcntYn())) {
+        disabled = true;
+        logger.info("미 사용 계정입니다. 사용자 아이디 : " + userId);
+      } else if ("Y".equals(user.getAcntLockYn())) {
+        accountLocked = true;
+        logger.info("특정사유(비밀번호 입력회수 초과 등)로 인해 잠긴 계정입니다. 사용자 아이디 : " + userId);
+      } else if ("Y".equals(user.getAcntExpYn())) {
+        accountExpired = true;
+        logger.info("사용기한이 만료된 계정입니다. 사용자 아이디 : " + userId);
+      }
+
+      builder.accountLocked(accountLocked);
+      builder.accountExpired(accountExpired);
       builder.credentialsExpired(false);
-      builder.disabled(false);
+      builder.disabled(disabled);
       builder.authorities(user.getUserRoles());
+
     } else {
       throw new UsernameNotFoundException("User not found.");
     }

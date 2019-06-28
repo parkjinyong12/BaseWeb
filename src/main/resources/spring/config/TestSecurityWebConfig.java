@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import spring.impl.LoginFailureHandler;
+import spring.impl.LoginSuccessHandler;
 
 /**
  * Spring Security 인증(Authentication) 처리를 진행합니다.
@@ -46,8 +48,9 @@ public class TestSecurityWebConfig extends WebSecurityConfigurerAdapter {
     http.csrf().disable();
 
     http.formLogin().loginPage("/login.do").loginProcessingUrl("/j_spring_security_check.do")
-        .defaultSuccessUrl("/loginSuccess.do").failureUrl("/loginFail.do")
-        .usernameParameter("j_username").passwordParameter("j_password");
+        .usernameParameter("j_username").passwordParameter("j_password")
+        .successHandler(new LoginSuccessHandler()).failureHandler(new LoginFailureHandler());
+    // .defaultSuccessUrl("/loginSuccess.do").failureUrl("/loginFail.do");
 
     http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
         .invalidateHttpSession(true);
