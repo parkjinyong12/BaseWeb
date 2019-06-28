@@ -1,7 +1,12 @@
 package com.ruokit.main.dao.user;
 
-import com.ruokit.main.model.user.User;
+import java.util.List;
+import com.ruokit.main.model.user.UserInfo;
+import com.ruokit.main.model.user.UserRole;
 
 public interface UserDao {
-  public User getUser(String userId);
+
+  public UserInfo getUser(String userId);
+
+  public List<UserRole> getUserRoles(String userId);
 }

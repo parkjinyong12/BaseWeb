@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="User">
-	<select id="getUser" parameterType="String" resultType="com.ruokit.main.model.user.User" >
+	<resultMap id="UserInfoMap" type="UserInfo">
+		<id property="id" column="id"/>
+  		<result property="regDt" column="reg_dt"/>
+  		<result property="regId" column="reg_id"/>
+  		<result property="uptDt" column="upt_dt"/>
+  		<result property="uptId" column="upt_id"/>
+  		<result property="acntExpYn" column="acnt_exp_yn"/>
+  		<result property="acntLockYn" column="acnt_lock_yn"/>
+  		<result property="acntYn" column="acnt_yn"/>
+  		<result property="expireDt" column="expire_dt"/>
+  		<result property="failCnt" column="fail_cnt"/>
+  		<result property="passwd" column="passwd"/>
+  		<result property="pwExpYn" column="pw_exp_yn"/>
+  		<result property="userId" column="user_id"/>
+  		<result property="userNm" column="user_nm"/>  		
+	</resultMap>
+	<resultMap id="UserRoleMap" type="UserRole">
+		<id property="id" column="id"/>
+  		<result property="roleCd" column="role_cd"/>
+  		<result property="userId" column="user_id"/>  		 		
+	</resultMap>
+	<select id="getUser" parameterType="String" resultMap="UserInfoMap" >
 		select id, 
 			   reg_dt,
 			   reg_id,
@@ -17,6 +38,13 @@
 			   user_id,
 			   user_nm
 		  from tb_user 
+		 where user_id = #{user_id}
+	</select>
+	<select id="getUserRole" parameterType="String" resultMap="UserRoleMap" >
+		select id, 
+			   role_cd, 
+			   user_id
+		  from tb_user_role 
 		 where user_id = #{user_id}
 	</select>
 </mapper>

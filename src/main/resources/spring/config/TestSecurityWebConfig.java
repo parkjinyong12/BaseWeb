@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -59,7 +60,7 @@ public class TestSecurityWebConfig extends WebSecurityConfigurerAdapter {
   public DaoAuthenticationProvider daoAuthenticationProvider() {
     DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
     daoAuthenticationProvider.setUserDetailsService(userDetailsService); //
-    // daoAuthenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
+    daoAuthenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
     return daoAuthenticationProvider;
   }
 }
