@@ -10,7 +10,6 @@ public class User implements UserDetails {
   private String password;
 
   private boolean isAccountNonExpired;
-  private String[] roles;
   private boolean isAccountNonLocked;
   private boolean isCredentialsNonExpired;
   private boolean isEnabled;
@@ -32,10 +31,6 @@ public class User implements UserDetails {
 
   public String getPassword() {
     return password;
-  }
-
-  public String[] getRoles() {
-    return roles;
   }
 
   @Override
