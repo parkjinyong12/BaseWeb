@@ -4,11 +4,13 @@ import java.util.Properties;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 
 @Configuration
@@ -32,12 +34,11 @@ public class TestDatabaseConfig {
 
     SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
     sqlSessionFactoryBean.setDataSource(jndiDataSource());
-
     sqlSessionFactoryBean.setConfigLocation(
         applicationContext.getResource(properties.getProperty("db.mybatis.config")));
     sqlSessionFactoryBean.setMapperLocations(
         applicationContext.getResources(properties.getProperty("db.mybatis.mapper.location")));
-
+//    sqlSessionFactoryBean.setTransactionFactory(new ManagedTransactionFactory());
     return sqlSessionFactoryBean.getObject();
   }
 
@@ -50,8 +51,11 @@ public class TestDatabaseConfig {
     return sqlSessionTemplate;
   }
 
-  /*
-   * @Bean public JtaTransactionManager transactionManager() { JtaTransactionManager
-   * transactionManager = new JtaTransactionManager(); return transactionManager; }
-   */
+
+  @Bean
+  public DataSourceTransactionManager transactionManager() {
+    DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
+    transactionManager.setDataSource(jndiDataSource());
+    return transactionManager;
+  }
 }
