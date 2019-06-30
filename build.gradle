@@ -52,7 +52,7 @@ dependencies {
     compile  group: "org.mybatis", name: "mybatis-spring", version: "${version.mybatis_spring}"
         
     // mysql
-    compile  group: "mysql", name: "mysql-connector-java", version: "${version.mysql}"
+    //compile  group: "mysql", name: "mysql-connector-java", version: "${version.mysql}"
 
     // tomcat
 	compile group: "org.apache.tomcat", name: "tomcat", version: "${version.tomcat}"
