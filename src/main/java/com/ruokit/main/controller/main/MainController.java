@@ -18,6 +18,6 @@ public class MainController {
   @RequestMapping("/main.do")
   public String getLogin() {
     logger.info("scr. main");
-    return "main";
+    return mainService.getMainPage();
   }
 }

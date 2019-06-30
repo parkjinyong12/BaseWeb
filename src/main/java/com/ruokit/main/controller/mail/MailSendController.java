@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ruokit.main.ResultCode;
 import com.ruokit.main.model.mail.MailContent;
 import com.ruokit.main.service.mail.MailService;
+import com.ruokit.main.service.mail.impl.DefaultMailService;
 
 @Controller
 @RequestMapping("/mail")
@@ -18,28 +19,29 @@ public class MailSendController {
 
   private static final Logger logger = LoggerFactory.getLogger(MailSendController.class);
   private String viewDirectory = "/mail";
-   
-  @Resource(name="appConfiguration")
+
+  @Resource(name = "appConfiguration")
   private Properties properties;
-    
+
   @RequestMapping("/sendSubmit.do")
   public String getTestMail(@ModelAttribute("content") MailContent content, Model m) {
-    
+
     String sender = properties.getProperty("mail.sender");
     String senderName = properties.getProperty("mail.sender.name");
     String smtpHost = properties.getProperty("mail.smtp.host");
     String smtpPort = properties.getProperty("mail.smtp.port");
     String smtpUserName = properties.getProperty("mail.smtp.user.name");
     String smtpPassword = properties.getProperty("mail.smtp.user.password");
-           
-    MailService mailService = new MailService(smtpHost, smtpPort, smtpUserName, smtpPassword, sender, senderName);
-      
-    content.setReceiver("methere12@naver.com");   
+
+    MailService mailService =
+        new DefaultMailService(smtpHost, smtpPort, smtpUserName, smtpPassword, sender, senderName);
+
+    content.setReceiver("methere12@naver.com");
     ResultCode result = mailService.sendMail(content);
-    
-    m.addAttribute("result", result.getText());    
+
+    m.addAttribute("result", result.getText());
     logger.info("mail send result : " + result.getText());
-    
+
     return viewDirectory + "/sendResult";
   }
 
