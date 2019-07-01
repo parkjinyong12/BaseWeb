@@ -8,7 +8,7 @@ import com.ruokit.main.model.user.UserInfo;
 import com.ruokit.main.model.user.UserRole;
 
 @Repository
-public class UserDaoImpl extends CommonDao implements UserDao {
+public class DefaultUserDao extends CommonDao implements UserDao {
 
   @Override
   public UserInfo getUser(String userId) {
