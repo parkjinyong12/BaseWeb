@@ -23,13 +23,15 @@ public class DaoLoggingAdvice implements MethodInterceptor {
       Class<?> returnTypeClass = reflectMethod.getReturnType();
       // logger.info("type : " + returnTypeClass.getTypeName());
 
-      for (Class<?> clazz : returnTypeClass.getInterfaces()) {
-        if ("RuokitModel".indexOf(clazz.getName()) != -1) {
-          logger.info("result : " + ret.toString());
-        } else {
-          logger.info("result : " + ret.toString());
-        }
-      }
+      /*
+       * for (Class<?> clazz : returnTypeClass.getInterfaces()) { if
+       * ("RuokitModel".indexOf(clazz.getName()) != -1) {
+       * 
+       * } }
+       */
+
+      logger.info("result : " + ret.toString());
+
       return ret;
     } catch (RuntimeException e) {
       throw e;
