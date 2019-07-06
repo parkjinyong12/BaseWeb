@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.ruokit.main.dao.test.TestDao;
 
 @Repository
-public class DefaultTestDao implements TestDao {
+public class TestDaoImpl implements TestDao {
 
   @Autowired
   private SqlSessionTemplate sqlSession;

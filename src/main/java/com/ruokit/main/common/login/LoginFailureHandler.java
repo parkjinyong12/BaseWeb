@@ -1,4 +1,4 @@
-package spring.impl;
+package com.ruokit.main.common.login;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

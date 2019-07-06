@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ruokit.main.ResultCode;
 import com.ruokit.main.model.mail.MailContent;
 import com.ruokit.main.service.mail.MailService;
-import com.ruokit.main.service.mail.impl.DefaultMailService;
+import com.ruokit.main.service.mail.impl.MailServiceImpl;
 
 @Controller
 @RequestMapping("/mail")
@@ -34,7 +34,7 @@ public class MailSendController {
     String smtpPassword = properties.getProperty("mail.smtp.user.password");
 
     MailService mailService =
-        new DefaultMailService(smtpHost, smtpPort, smtpUserName, smtpPassword, sender, senderName);
+        new MailServiceImpl(smtpHost, smtpPort, smtpUserName, smtpPassword, sender, senderName);
 
     content.setReceiver("methere12@naver.com");
     ResultCode result = mailService.sendMail(content);

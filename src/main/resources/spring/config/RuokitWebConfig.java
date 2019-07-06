@@ -7,17 +7,20 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-public class TestWebConfig implements WebMvcConfigurer {
+@ComponentScan(basePackages = "com.ruokit, spring.aop")
+public class RuokitWebConfig implements WebMvcConfigurer {
 
-  private static final Logger logger = LoggerFactory.getLogger(TestWebConfig.class);
+  private static final Logger logger = LoggerFactory.getLogger(RuokitWebConfig.class);
   private static final String appPropPath = "/config/application.properties";
 
   private String[] environmentTypes = {"dev", "prod"};
@@ -35,7 +38,12 @@ public class TestWebConfig implements WebMvcConfigurer {
     registry.addViewController("/").setViewName("redirect:/main.do");
   }
 
-  @Bean(name = "appConfiguration")
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    // registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+  }
+
+  @Bean
   public Properties appConfiguration() throws Exception {
 
     String commonPropPath = "";

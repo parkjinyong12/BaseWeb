@@ -1,4 +1,4 @@
-package spring.impl;
+package com.ruokit.main.common.user;
 
 import java.util.ArrayList;
 import java.util.List;

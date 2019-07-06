@@ -14,7 +14,7 @@ import com.ruokit.main.ResultCode;
 import com.ruokit.main.model.mail.MailContent;
 import com.ruokit.main.service.mail.MailService;
 
-public class DefaultMailService implements MailService {
+public class MailServiceImpl implements MailService {
 
   private static final Logger logger = LoggerFactory.getLogger(MailService.class);
 
@@ -25,7 +25,7 @@ public class DefaultMailService implements MailService {
   private String sender;
   private String senderName;
 
-  public DefaultMailService(String smtpHost, String smtpPort, String smtpUserName,
+  public MailServiceImpl(String smtpHost, String smtpPort, String smtpUserName,
       String smtpPassword, String sender, String senderName) {
     this.smtpHost = smtpHost;
     this.smtpPort = smtpPort;

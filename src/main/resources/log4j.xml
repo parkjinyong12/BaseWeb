@@ -10,20 +10,10 @@
     </appender>
     	
 	<!-- Application Loggers -->
-	<!-- <logger name="com.ruokit.controller" additivity="false">
-		<level value="DEBUG" />
+	<logger name="org.mybatis.spring" additivity="false">
+		<level value="INFO" />
 		<appender-ref ref="console"/>
 	</logger>
-	
-	<logger name="com.ruokit.service.test" additivity="false">
-		<level value="DEBUG" />
-		<appender-ref ref="console"/>
-	</logger>
-	
-	<logger name="com.ruokit.springcontext" additivity="false">
-		<level value="DEBUG" />
-		<appender-ref ref="console"/>
-	</logger> -->
 	
 	<!-- Framework Loggers -->
 	<logger name="org.springframework" additivity="false">

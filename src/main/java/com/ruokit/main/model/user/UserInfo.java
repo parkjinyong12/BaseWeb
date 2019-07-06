@@ -2,8 +2,9 @@ package com.ruokit.main.model.user;
 
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
+import com.ruokit.main.model.RuokitModel;
 
-public class UserInfo {
+public class UserInfo implements RuokitModel {
   private String id;
   private String regDt;
   private String regId;

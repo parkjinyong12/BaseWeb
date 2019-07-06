@@ -6,12 +6,11 @@ import org.springframework.stereotype.Service;
 import com.ruokit.main.service.main.MainService;
 
 @Service
-public class DefaultMainService implements MainService {
+public class MainServiceImpl implements MainService {
 
   private static final Logger logger = LoggerFactory.getLogger(MainService.class);
 
   public String getMainPage() {
-    logger.info("srv. getMainPage");
     return "main";
   }
 }

@@ -1,6 +1,8 @@
 package com.ruokit.main.model.user;
 
-public class UserRole {
+import com.ruokit.main.model.RuokitModel;
+
+public class UserRole implements RuokitModel {
   private String id;
   private String roleCd;
   private String userId;

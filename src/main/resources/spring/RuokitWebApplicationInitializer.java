@@ -11,11 +11,13 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
-import spring.config.TestDatabaseConfig;
-import spring.config.TestSecurityWebConfig;
-import spring.config.TestWebConfig;
+import spring.config.RuokitBeanPostProcConfig;
+import spring.config.RuokitDatabaseConfig;
+import spring.config.RuokitLoggingConfig;
+import spring.config.RuokitSecurityWebConfig;
+import spring.config.RuokitWebConfig;
 
-public class TestWebApplicationInitializer implements WebApplicationInitializer {
+public class RuokitWebApplicationInitializer implements WebApplicationInitializer {
 
   private static final String DISPATCHER_SERVLET_NAME = "dispatcher";
 
@@ -40,9 +42,11 @@ public class TestWebApplicationInitializer implements WebApplicationInitializer 
     // Servlet
     AnnotationConfigWebApplicationContext dispatcherContext =
         new AnnotationConfigWebApplicationContext();
-    dispatcherContext.register(TestWebConfig.class);
-    dispatcherContext.register(TestSecurityWebConfig.class);
-    dispatcherContext.register(TestDatabaseConfig.class);
+    dispatcherContext.register(RuokitWebConfig.class);
+    dispatcherContext.register(RuokitSecurityWebConfig.class);
+    dispatcherContext.register(RuokitDatabaseConfig.class);
+    dispatcherContext.register(RuokitBeanPostProcConfig.class);
+    dispatcherContext.register(RuokitLoggingConfig.class);
 
     ServletRegistration.Dynamic dispatcherServletRegist;
     dispatcherServletRegist = servletContext.addServlet(DISPATCHER_SERVLET_NAME,

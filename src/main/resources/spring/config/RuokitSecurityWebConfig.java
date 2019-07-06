@@ -13,8 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import spring.impl.LoginFailureHandler;
-import spring.impl.LoginSuccessHandler;
+import com.ruokit.main.common.login.LoginFailureHandler;
+import com.ruokit.main.common.login.LoginSuccessHandler;
 
 /**
  * Spring Security 인증(Authentication) 처리를 진행합니다.
@@ -23,8 +23,7 @@ import spring.impl.LoginSuccessHandler;
  */
 @Configuration
 @EnableWebSecurity
-@ComponentScan(basePackages = "com.ruokit, spring.impl")
-public class TestSecurityWebConfig extends WebSecurityConfigurerAdapter {
+public class RuokitSecurityWebConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
   private UserDetailsService userDetailsService;

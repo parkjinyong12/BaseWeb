@@ -30,4 +30,11 @@ public class TestController {
     m.addAttribute("context", result);
     return "test";
   }
+
+  @RequestMapping("/setTest.do")
+  public String setTest(Model m) {
+    String result = testService.saveTest();
+    m.addAttribute("context", result);
+    return "test";
+  }
 }

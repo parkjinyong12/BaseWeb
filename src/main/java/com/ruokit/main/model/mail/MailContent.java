@@ -1,6 +1,8 @@
 package com.ruokit.main.model.mail;
 
-public class MailContent {
+import com.ruokit.main.model.RuokitModel;
+
+public class MailContent implements RuokitModel {
 
   private String receiver;
   private String sender;
