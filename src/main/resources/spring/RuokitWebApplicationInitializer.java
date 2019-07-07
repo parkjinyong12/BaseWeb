@@ -11,6 +11,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
+import spring.config.RuokitAuthServerConfig;
 import spring.config.RuokitBeanPostProcConfig;
 import spring.config.RuokitDatabaseConfig;
 import spring.config.RuokitLoggingConfig;
@@ -47,6 +48,7 @@ public class RuokitWebApplicationInitializer implements WebApplicationInitialize
     dispatcherContext.register(RuokitDatabaseConfig.class);
     dispatcherContext.register(RuokitBeanPostProcConfig.class);
     dispatcherContext.register(RuokitLoggingConfig.class);
+    dispatcherContext.register(RuokitAuthServerConfig.class);
 
     ServletRegistration.Dynamic dispatcherServletRegist;
     dispatcherServletRegist = servletContext.addServlet(DISPATCHER_SERVLET_NAME,

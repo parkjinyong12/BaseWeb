@@ -21,7 +21,8 @@ targetCompatibility = '1.8'
 
 def version = [
         spring: '5.1.5.RELEASE',
-        servlet: "3.1.0",
+        spring_oauth2: '2.3.6.RELEASE',
+        servlet: '3.1.0',
         slf4j: '1.7.25',
         tomcat: '8.0.9',
         mybatis: '3.5.1',
@@ -49,6 +50,9 @@ dependencies {
     compile  group: "org.springframework.security", name: "spring-security-web", version: "${version.spring}"
     compile  group: "org.springframework.security", name: "spring-security-config", version: "${version.spring}"
     
+    // spring oauth
+    compile  group: "org.springframework.security.oauth", name: "spring-security-oauth2", version: "${version.spring_oauth2}"
+    
     // mybatis
     compile  group: "org.mybatis", name: "mybatis", version: "${version.mybatis}"
     compile  group: "org.mybatis", name: "mybatis-spring", version: "${version.mybatis_spring}"
@@ -68,6 +72,9 @@ dependencies {
     // AspectJ
     compile group: "org.aspectj", name: "aspectjrt", version: "${version.aspectj}"
     compile group: "org.aspectj", name: "aspectjweaver", version: "${version.aspectj}"    
+    
+    // Lombok
+    compile group: "org.projectlombok", name: "lombok", version: "1.16.20"
     
     // junit
     testCompile group: "junit", name: "junit", version: "4.12"    
