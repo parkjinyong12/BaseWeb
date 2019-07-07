@@ -11,7 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 
 @EnableAuthorizationServer
 @Configuration
-public class RuokitAuthServerConfig extends AuthorizationServerConfigurerAdapter {
+public class RuokitOAuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
   @Resource(name = "jndiDataSource")
   DataSource dataSource;

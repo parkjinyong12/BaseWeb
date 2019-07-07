@@ -1,14 +1,46 @@
 package spring.config;
 
+import javax.annotation.Resource;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import com.ruokit.main.common.aop.NameMatchClassMethodPointcut;
 import com.ruokit.main.common.aop.logging.DaoLoggingAdvice;
 import com.ruokit.main.common.aop.logging.ServiceLoggingAdvice;
+import com.ruokit.main.common.aop.transaction.TransactionAdvice;
 
 @Configuration
-public class RuokitLoggingConfig {
+public class RuokitAspectOrientedConfig {
+
+  @Resource(name = "transactionManager")
+  DataSourceTransactionManager dataSourceTransactionManager;
+
+  /*
+   * Transaction Manage
+   */
+  @Bean
+  public TransactionAdvice transactionAdvice() {
+    TransactionAdvice txAdvice = new TransactionAdvice();
+    txAdvice.setTransactionManager(dataSourceTransactionManager);
+    return txAdvice;
+  }
+
+  @Bean
+  public NameMatchClassMethodPointcut transactionPotinCut() {
+    NameMatchClassMethodPointcut pointcut = new NameMatchClassMethodPointcut();
+    pointcut.setMappedClassName("*ServiceImpl*");
+    pointcut.setMappedNames("*");
+    return pointcut;
+  }
+
+  @Bean
+  public DefaultPointcutAdvisor transactionAdvisor() {
+    DefaultPointcutAdvisor pointcutAdvisor = new DefaultPointcutAdvisor();
+    pointcutAdvisor.setAdvice(transactionAdvice());
+    pointcutAdvisor.setPointcut(transactionPotinCut());
+    return pointcutAdvisor;
+  }
 
   /*
    * Service Logging

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RuokitBeanPostProcConfig implements BeanFactoryPostProcessor {
+public class RuokitBeanPostProcessorConfig implements BeanFactoryPostProcessor {
 
   @Bean
   public DefaultAdvisorAutoProxyCreator autoProxyCreator() {

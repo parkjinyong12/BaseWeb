@@ -11,10 +11,10 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
-import spring.config.RuokitAuthServerConfig;
-import spring.config.RuokitBeanPostProcConfig;
+import spring.config.RuokitAspectOrientedConfig;
+import spring.config.RuokitBeanPostProcessorConfig;
 import spring.config.RuokitDatabaseConfig;
-import spring.config.RuokitLoggingConfig;
+import spring.config.RuokitOAuthServerConfig;
 import spring.config.RuokitSecurityWebConfig;
 import spring.config.RuokitWebConfig;
 
@@ -46,9 +46,9 @@ public class RuokitWebApplicationInitializer implements WebApplicationInitialize
     dispatcherContext.register(RuokitWebConfig.class);
     dispatcherContext.register(RuokitSecurityWebConfig.class);
     dispatcherContext.register(RuokitDatabaseConfig.class);
-    dispatcherContext.register(RuokitBeanPostProcConfig.class);
-    dispatcherContext.register(RuokitLoggingConfig.class);
-    dispatcherContext.register(RuokitAuthServerConfig.class);
+    dispatcherContext.register(RuokitBeanPostProcessorConfig.class);
+    dispatcherContext.register(RuokitAspectOrientedConfig.class);
+    dispatcherContext.register(RuokitOAuthServerConfig.class);
 
     ServletRegistration.Dynamic dispatcherServletRegist;
     dispatcherServletRegist = servletContext.addServlet(DISPATCHER_SERVLET_NAME,
