@@ -28,8 +28,8 @@ public class TransactionAdvice implements MethodInterceptor {
     TransactionStatus status =
         this.transactionManager.getTransaction(new DefaultTransactionDefinition());
 
-    if (status.isNewTransaction())
-      logger.info("transaction start");
+    // if (status.isNewTransaction())
+    // logger.info("transaction start");
 
     try {
       Object ret = invocation.proceed();
@@ -37,10 +37,11 @@ public class TransactionAdvice implements MethodInterceptor {
       return ret;
     } catch (RuntimeException e) {
       this.transactionManager.rollback(status);
+      logger.info("transaction rollback");
       throw e;
     } finally {
-      if (status.isCompleted())
-        logger.info("transaction end");
+      // if (status.isCompleted())
+      // logger.info("transaction end");
     }
   }
 
